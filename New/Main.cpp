@@ -74,16 +74,16 @@ void updateBodyMotion(Body& body, const glm::vec2& force, float dt) {
 	body.velocity += accel * dt;
 	body.position += body.velocity * dt;
 
-	float limit = 1.0f - body.radius;
+	/*float limit = 1.0f - body.radius;
 	if (body.position.x <= -limit || body.position.x >= limit)
 		body.velocity.x *= -1;
 
 	if (body.position.y <= -limit || body.position.y >= limit)
-		body.velocity.y *= -1;
+		body.velocity.y *= -1;*/
 
-	/*float limit = 1.0f - body.radius;
+	float limit = 1.0f - body.radius;
 	body.position.x = glm::clamp(body.position.x, -limit, limit);
-	body.position.y = glm::clamp(body.position.y, -limit, limit);*/
+	body.position.y = glm::clamp(body.position.y, -limit, limit);
 
 }
 
@@ -110,7 +110,7 @@ int main() {
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-	GLFWwindow* window = glfwCreateWindow(800, 800, "Hello World", NULL, NULL);
+	GLFWwindow* window = glfwCreateWindow(1200, 1200, "Hello World", NULL, NULL);
 	if (window == NULL) {
 		std::cerr << "Failed to create GLFW window" << std::endl;
 		glfwTerminate();
@@ -127,13 +127,19 @@ int main() {
 	
 	float G = 1.0f;
 
-	Body body1 = {glm::vec2(0.0f, 0.0f),glm::vec2(0.0f, 0.0f),10.0f,0.3f};
+	
+
 
 	float r = 0.5f;
-	float orbitalSpeed = 0.95f * std::sqrt(G * body1.mass / r);
+	float mass1 = 20.0f;
+	float mass2 = 1.0f;
+	float orbitalSpeed = 0.95f * std::sqrt(G * mass1 / r);
 
+	glm::vec2 velocity2 = glm::vec2(0.0f, orbitalSpeed);
+	glm::vec2 velocity1 = -(velocity2 * (mass2 / mass1));  // Momentum balancing
 
-	Body body2 = {glm::vec2(r, 0.0f),glm::vec2(0.0f, orbitalSpeed),1.0f,0.3f};
+	Body body1 = { glm::vec2(0.0f, 0.0f), velocity1, mass1, 0.4f };
+	Body body2 = { glm::vec2(r, 0.0f), velocity2, mass2, 0.3f };
 	std::vector<float> vertices = numofvertices(0.2f);
 	
 	
@@ -187,7 +193,7 @@ int main() {
 
 
 
-	glViewport(0, 0, 800, 800);
+	glViewport(0, 0, 1200, 1200);
 
 
 	glDisable(GL_CULL_FACE);
