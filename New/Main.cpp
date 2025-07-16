@@ -132,7 +132,7 @@ int main() {
 	
 
 
-	float r = 0.5f;
+	float r = 0.7f;
 	float mass1 = 20.0f;
 	float mass2 = 1.0f;
 	float orbitalSpeed = 0.95f * std::sqrt(G * mass1 / r);
@@ -140,8 +140,8 @@ int main() {
 	glm::vec2 velocity2 = glm::vec2(0.0f, orbitalSpeed);
 	glm::vec2 velocity1 = -(velocity2 * (mass2 / mass1));  // Momentum balancing
 
-	Body body1 = { glm::vec2(0.0f, 0.0f), velocity1, mass1, 0.4f };
-	Body body2 = { glm::vec2(r, 0.0f), velocity2, mass2, 0.3f };
+	Body body1 = { glm::vec2(0.0f, 0.0f), velocity1, mass1, 0.3f };
+	Body body2 = { glm::vec2(r, 0.0f), velocity2, mass2, 0.1f };
 	std::vector<float> vertices = numofvertices(0.2f);
 
 
@@ -213,10 +213,13 @@ int main() {
 		float deltaTime = currentTime - lastTime;
 		lastTime = currentTime;
 
+		const float timeScale = 0.01f; // for realistic sun and earth motion almost same
+		float scaledDeltaTime = deltaTime * timeScale;
+
 		
 		glm::vec2 force = calGravitationalforce(body1, body2);
-		updateBodyMotion(body1, force, deltaTime);
-		updateBodyMotion(body2, -force, deltaTime);
+		updateBodyMotion(body1, force, scaledDeltaTime);
+		updateBodyMotion(body2, -force, scaledDeltaTime);
 
 		
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
