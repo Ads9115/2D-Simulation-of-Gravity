@@ -14,6 +14,11 @@ This project is a real-time 2D gravity and orbit simulation built using **C++** 
 
 ---
 
+## Video Preview
+
+[![Watch the simulation](https://img.youtube.com/vi/7x2pEH2I4t4/maxresdefault.jpg)](https://youtu.be/7x2pEH2I4t4)
+
+
 ## 🧠 What I Learned
 
 - Manual 2D vertex construction (circle using triangle fan)
