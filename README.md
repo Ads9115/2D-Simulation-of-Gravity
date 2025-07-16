@@ -1,6 +1,6 @@
 ﻿# OpenGL 2D Gravity Simulation 🌍🚀
 
-This project is a real-time 2D gravity and orbit simulation built using **C++** and **OpenGL**. Two circular bodies interact through Newtonian gravity, orbit each other, and collide naturally — all in a custom shader-based render loop.
+This project is a real-time 2D gravity and orbit simulation built using **C++** and **OpenGL**. Two circular bodies interact through Newtonian gravity, orbit each other, and collide naturally all in a custom shader-based render loop.
 
 ---
 
