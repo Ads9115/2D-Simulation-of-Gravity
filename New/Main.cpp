@@ -74,25 +74,27 @@ void updateBodyMotion(Body& body, const glm::vec2& force, float dt) {
 	body.velocity += accel * dt;
 	body.position += body.velocity * dt;
 
-	/*float limit = 1.0f - body.radius;
+	float limit = 1.0f - body.radius;
 	if (body.position.x <= -limit || body.position.x >= limit)
 		body.velocity.x *= -1;
 
 	if (body.position.y <= -limit || body.position.y >= limit)
-		body.velocity.y *= -1;*/
+		body.velocity.y *= -1;
 
-	float limit = 1.0f - body.radius;
+	/*float limit = 1.0f - body.radius;
 	body.position.x = glm::clamp(body.position.x, -limit, limit);
-	body.position.y = glm::clamp(body.position.y, -limit, limit);
+	body.position.y = glm::clamp(body.position.y, -limit, limit);*/
 
 }
 
-void renderBody(const Body& body, Shader& shader, unsigned int VAO) {
+void renderBody(const Body& body, Shader& shader, unsigned int VAO, glm::vec3 color) {
 	GLint posLoc = glGetUniformLocation(shader.ID, "u_position");
 	GLint scaleLoc = glGetUniformLocation(shader.ID, "u_scale");
+	GLint colorLoc = glGetUniformLocation(shader.ID, "u_color");
 
 	glUniform2f(posLoc, body.position.x, body.position.y);
 	glUniform1f(scaleLoc, body.radius);  
+	glUniform3f(colorLoc, color.r, color.g, color.b);
 
 	glBindVertexArray(VAO);
 	glDrawArrays(GL_TRIANGLES, 0, numSegments * 3);
@@ -141,6 +143,10 @@ int main() {
 	Body body1 = { glm::vec2(0.0f, 0.0f), velocity1, mass1, 0.4f };
 	Body body2 = { glm::vec2(r, 0.0f), velocity2, mass2, 0.3f };
 	std::vector<float> vertices = numofvertices(0.2f);
+
+
+	glm::vec3 color1 = glm::vec3(1.0f, 0.0f, 0.3f);
+	glm::vec3 color2 = glm::vec3(1.0f, 0.7f, 0.3f);
 	
 	
 
@@ -216,8 +222,8 @@ int main() {
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 		shader.Activate();
-		renderBody(body1, shader, VAO);
-		renderBody(body2, shader, VAO);
+		renderBody(body1, shader, VAO, color1);
+		renderBody(body2, shader, VAO, color2);
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}
